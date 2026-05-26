@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For You 💖</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+background:linear-gradient(135deg,#ffd6e8,#cdb4ff);
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* PASSWORD SCREEN */
+
+#passwordScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:linear-gradient(135deg,#ffd6e8,#cdb4ff);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:99999;
+text-align:center;
+padding:20px;
+}
+
+#passwordScreen h1{
+font-size:3rem;
+color:#7b2cbf;
+margin-bottom:20px;
+}
+
+#passwordScreen p{
+font-size:1.1rem;
+color:#555;
+margin-bottom:20px;
+}
+
+#passwordInput{
+padding:14px 20px;
+border:none;
+border-radius:30px;
+outline:none;
+font-size:1rem;
+width:280px;
+text-align:center;
+}
+
+/* Screens */
+
+.screen{
+display:none;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+width:100%;
+height:100vh;
+padding:20px;
+animation:fade 0.8s ease;
+}
+
+.active{
+display:flex;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+h1{
+font-size:3rem;
+color:#7b2cbf;
+margin-bottom:20px;
+}
+
+p{
+font-size:1.15rem;
+max-width:700px;
+line-height:1.8;
+color:#444;
+}
+
+/* Buttons */
+
+button{
+margin-top:30px;
+padding:14px 32px;
+border:none;
+border-radius:30px;
+background:#ff8fab;
+color:white;
+font-size:1rem;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+background:#fb6f92;
+}
+
+/* GAME */
+
+#gameArea{
+width:500px;
+height:400px;
+background:white;
+border-radius:25px;
+position:relative;
+overflow:hidden;
+margin-top:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.heart{
+position:absolute;
+font-size:45px;
+cursor:pointer;
+user-select:none;
+transition:0.2s;
+}
+
+.heart:hover{
+transform:scale(1.2);
+}
+
+#score{
+margin-top:20px;
+font-size:1.3rem;
+font-weight:600;
+color:#7b2cbf;
+}
+
+/* Memories */
+
+.memories{
+display:flex;
+gap:25px;
+margin-top:30px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.card{
+width:220px;
+background:white;
+padding:15px;
+border-radius:22px;
+box-shadow:0 10px 20px rgba(0,0,0,0.12);
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.card img{
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:15px;
+}
+
+.caption{
+margin-top:10px;
+font-size:0.95rem;
+}
+
+/* Quote */
+
+.quote-box{
+background:white;
+padding:35px;
+border-radius:25px;
+max-width:700px;
+margin-top:30px;
+box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.quote{
+font-size:1.3rem;
+line-height:1.8;
+color:#7b2cbf;
+}
+
+/* Ending */
+
+.end{
+font-size:2.8rem;
+color:#7b2cbf;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD SCREEN -->
+
+<div id="passwordScreen">
+
+<h1>Secret Entry 💖</h1>
+
+<p>
+Only special people allowed 🌷
+</p>
+
+<input
+type="password"
+id="passwordInput"
+placeholder="Enter password">
+
+<button onclick="checkPassword()">
+Enter ✨
+</button>
+
+</div>
+
+<!-- SCREEN 1 -->
+
+<div class="screen active" id="welcomeScreen">
+
+<h1>Hey You 👋</h1>
+
+<p>
+I made this tiny little thing for you 💖<br>
+Because I know life gets exhausting sometimes.
+</p>
+
+<button onclick="nextScreen('gameScreen')">
+Enter 🌷
+</button>
+
+</div>
+
+<!-- SCREEN 2 GAME -->
+
+<div class="screen" id="gameScreen">
+
+<h1>Catch The Hearts 💕</h1>
+
+<p>
+Click 10 hearts to unlock memories ✨
+</p>
+
+<div id="gameArea"></div>
+
+<div id="score">
+Score: 0 / 10
+</div>
+
+<button onclick="startGame()">
+Start Game 🎮
+</button>
+
+</div>
+
+<!-- SCREEN 3 MEMORIES -->
+
+<div class="screen" id="memoryScreen">
+
+<h1>Memories Unlocked 📸</h1>
+
+<div class="memories">
+
+<div class="card">
+<img src="images/pic1.jpeg">
+
+<div class="caption">
+“Look who came from sooo far just for her katappa!!”
+</div>
+
+</div>
+
+<div class="card">
+<img src="images/pic2.jpeg">
+
+<div class="caption">
+“The college that made us meet!”
+</div>
+
+</div>
+
+<div class="card">
+<img src="images/pic3.jpeg">
+
+<div class="caption">
+“We finally got our internship certificates thanks to claude”
+</div>
+
+</div>
+
+</div>
+
+<button onclick="nextScreen('quoteScreen')">
+A Little Reminder 🌷
+</button>
+
+</div>
+
+<!-- SCREEN 4 -->
+
+<div class="screen" id="quoteScreen">
+
+<h1>A Little Reminder 💖</h1>
+
+<div class="quote-box">
+
+<div class="quote">
+
+I know you're tired 🌷<br><br>
+
+But you're doing so much better than you think.<br><br>
+
+Please don't be too hard on yourself.<br><br>
+
+I'm proud of you always 💕
+
+</div>
+
+</div>
+
+<button onclick="nextScreen('endScreen')">
+One Last Thing ✨
+</button>
+
+</div>
+
+<!-- SCREEN 5 -->
+
+<div class="screen" id="endScreen">
+
+<div class="end">
+Thanks For Existing 💖
+</div>
+
+<p style="margin-top:20px;">
+The world feels softer with you in it 🌸
+</p>
+
+<button onclick="location.reload()">
+Replay ✨
+</button>
+
+</div>
+
+<script>
+
+/* PASSWORD */
+
+function checkPassword(){
+
+const password =
+document.getElementById("passwordInput").value;
+
+/* CHANGE PASSWORD HERE */
+
+if(password === "katappa"){
+
+document.getElementById("passwordScreen")
+.style.display = "none";
+
+}
+else{
+
+alert("Wrong password 😭");
+
+}
+
+}
+
+/* SCREEN CHANGE */
+
+function nextScreen(id){
+
+document.querySelectorAll(".screen").forEach(screen=>{
+screen.classList.remove("active");
+});
+
+document.getElementById(id).classList.add("active");
+
+}
+
+/* GAME */
+
+let score = 0;
+let gameRunning = false;
+
+function startGame(){
+
+if(gameRunning) return;
+
+gameRunning = true;
+
+const gameArea =
+document.getElementById("gameArea");
+
+score = 0;
+
+document.getElementById("score").innerHTML =
+"Score: 0 / 10";
+
+const interval = setInterval(()=>{
+
+if(score >= 10){
+
+clearInterval(interval);
+
+setTimeout(()=>{
+nextScreen("memoryScreen");
+},1000);
+
+return;
+
+}
+
+/* CREATE HEART */
+
+const heart =
+document.createElement("div");
+
+heart.className = "heart";
+
+heart.innerHTML = "💖";
+
+/* RANDOM POSITION */
+
+heart.style.left =
+Math.random() * 430 + "px";
+
+heart.style.top =
+Math.random() * 330 + "px";
+
+/* CLICK EVENT */
+
+heart.addEventListener("click",()=>{
+
+score++;
+
+document.getElementById("score").innerHTML =
+"Score: " + score + " / 10";
+
+heart.remove();
+
+});
+
+/* ADD TO GAME AREA */
+
+gameArea.appendChild(heart);
+
+/* REMOVE AFTER 1.5 SEC */
+
+setTimeout(()=>{
+
+if(heart.parentNode){
+
+heart.remove();
+
+}
+
+},1500);
+
+},800);
+
+}
+
+</script>
+
+</body>
+</html>
